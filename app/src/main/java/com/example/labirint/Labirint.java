@@ -16,12 +16,16 @@ public class Labirint implements Drawable {
     private boolean [][] arrayMaze;
     private final int size;
     private final Point end = new Point(1,1);
+    private Point start;
+
+    private int bestScore = 0;
 
     public Labirint(int size) {
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setColor(Color.RED);
         this.size = size;
         arrayMaze = new boolean[size][size];
+        generateMaze();
     }
 
     private void generateMaze() {
@@ -72,7 +76,13 @@ public class Labirint implements Drawable {
                 int diffY = (direction.y - current.y) / 2;
                 arrayMaze[current.y + diffY][current.x + diffX] = true;
             }
-            else
+            else {
+                if(bestScore < stack.size()) {
+                    bestScore = stack.size();
+                    start = current;
+                }
+                stack.pop();
+            }
         }
 
 

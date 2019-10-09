@@ -12,11 +12,14 @@ public class Game extends GestureDetector.SimpleOnGestureListener {
     private List<Drawable> drawables = new ArrayList<>();
     private View view;
     private Player player;
+    private Labirint labirint;
 
     public Game() {
         player = new Player();
+        labirint = new Labirint(5);
+
         drawables.add(player);
-        drawables.add(new Labirint());
+        drawables.add(labirint);
     }
 
     @Override
@@ -26,7 +29,6 @@ public class Game extends GestureDetector.SimpleOnGestureListener {
         difY = Math.round(e2.getY() - e1.getY());
         player.move(difX, difY);
         view.invalidate();
-//        Log.i("GM", String.format("DiffX = %f\n DiffY = %f", difX, difY));
         return super.onFling(e1, e2, velocityX, velocityY);
     }
 
