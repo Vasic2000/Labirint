@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.graphics.Rect;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.Stack;
 
 public class Labirint implements Drawable {
 
-    private Paint paint;
+    private Paint wallPaint;
     private boolean [][] arrayMaze;
     private final int size;
     private final Point end = new Point(1,1);
@@ -21,8 +22,8 @@ public class Labirint implements Drawable {
     private int bestScore = 0;
 
     public Labirint(int size) {
-        paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paint.setColor(Color.RED);
+        wallPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        wallPaint.setColor(Color.BLACK);
         this.size = size;
         arrayMaze = new boolean[size][size];
         generateMaze();
@@ -75,6 +76,7 @@ public class Labirint implements Drawable {
                 int diffX = (direction.x - current.x) / 2;
                 int diffY = (direction.y - current.y) / 2;
                 arrayMaze[current.y + diffY][current.x + diffX] = true;
+                stack.push(direction);
             }
             else {
                 if(bestScore < stack.size()) {
@@ -99,7 +101,19 @@ public class Labirint implements Drawable {
     }
 
     @Override
-    public void draw(Canvas canvas) {
-        canvas.drawCircle(100,100,50,paint);
+    public void draw(Canvas canvas, Rect rect) {
+        float cellSize = (float) (rect.right - rect.left) / size;
+        for (int i = 0; i < size; i++)
+            for (int j = 0; j < size; j++) {
+                if (!arrayMaze[i][j]) {
+                    float left = j * cellSize + rect.left;
+                    float top = i * cellSize + rect.top;
+                    canvas.drawRect(
+                            left,
+                            top,
+                            left + cellSize,
+                            top + cellSize, wallPaint);
+                }
+            }
     }
 }

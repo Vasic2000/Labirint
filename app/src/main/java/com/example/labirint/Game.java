@@ -1,6 +1,7 @@
 package com.example.labirint;
 
 import android.graphics.Canvas;
+import android.graphics.Rect;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -14,9 +15,12 @@ public class Game extends GestureDetector.SimpleOnGestureListener {
     private Player player;
     private Labirint labirint;
 
+    private Rect rect = new Rect();
+    private int size = 0;
+
     public Game() {
         player = new Player();
-        labirint = new Labirint(5);
+        labirint = new Labirint(15);
 
         drawables.add(player);
         drawables.add(labirint);
@@ -34,12 +38,22 @@ public class Game extends GestureDetector.SimpleOnGestureListener {
 
     public void draw(Canvas canvas) {
         for(Drawable item : drawables) {
-            item.draw(canvas);
+            item.draw(canvas, rect);
         }
 
     }
 
     public void setView(View view) {
         this.view = view;
+    }
+
+    public void setScreenSize(int width, int height) {
+        size = Math.min(width, height);
+        rect.set(
+                (width - size)/ 2,
+                (height - size)/ 2,
+                (width + size)/ 2,
+                (height + size)/ 2
+        );
     }
 }

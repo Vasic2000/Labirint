@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.graphics.Rect;
 
 public class Player implements Drawable {
 
@@ -23,7 +24,7 @@ public class Player implements Drawable {
     }
 
     @Override
-    public void draw(Canvas canvas) {
+    public void draw(Canvas canvas, Rect rect) {
         canvas.drawRect(point.x, point.y,point.x + 50,point.y + 50, paint);
     }
 }

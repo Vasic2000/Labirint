@@ -18,4 +18,10 @@ public class MazeView extends View {
     protected void onDraw(Canvas canvas) {
         gameManager.draw(canvas);
     }
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        gameManager.setScreenSize(w, h);
+    }
 }
