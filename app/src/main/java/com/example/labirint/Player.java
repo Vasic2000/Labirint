@@ -9,13 +9,14 @@ import android.graphics.Rect;
 public class Player implements Drawable {
 
     private Paint paint;
-
     private Point point;
+    private int size;
 
-    public Player() {
+    public Player(Point start, int size) {
+        this.size = size;
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setColor(Color.MAGENTA);
-        point = new Point(0,0);
+        point = start;
     }
 
     public  void move(int diffX, int diffY) {
@@ -23,8 +24,22 @@ public class Player implements Drawable {
         point.y += diffY;
     }
 
+    public int getX() {
+        return point.x;
+    }
+
+    public int getY() {
+        return point.y;
+    }
+
     @Override
     public void draw(Canvas canvas, Rect rect) {
-        canvas.drawRect(point.x, point.y,point.x + 50,point.y + 50, paint);
+        float cellSize = (float) (rect.right - rect.left) / size;
+        canvas.drawRect(
+                rect.left + point.x * cellSize,
+                rect.top + point.y * cellSize,
+                rect.left + point.x * cellSize + cellSize,
+                rect.top + point.y * cellSize + cellSize,
+                paint);
     }
 }

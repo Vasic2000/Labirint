@@ -16,11 +16,11 @@ public class Game extends GestureDetector.SimpleOnGestureListener {
     private Labirint labirint;
 
     private Rect rect = new Rect();
-    private int size = 0;
+    private int size = 15;
 
     public Game() {
-        player = new Player();
-        labirint = new Labirint(15);
+        labirint = new Labirint(size);
+        player = new Player(labirint.getStart(), size);
 
         drawables.add(player);
         drawables.add(labirint);
@@ -31,8 +31,22 @@ public class Game extends GestureDetector.SimpleOnGestureListener {
         int difX = 0, difY = 0;
         difX = Math.round(e2.getX() - e1.getX());
         difY = Math.round(e2.getY() - e1.getY());
-        player.move(difX, difY);
-        view.invalidate();
+
+        if(Math.abs(difX) > Math.abs(difY)) {
+            difX  = difX > 0 ? 1 : -1;
+            difY =0;
+        } else {
+            difX  = 0;
+            difY = difY > 0 ? 1 : -1;;
+        }
+
+        if (labirint.canPlayerGoTo(
+                player.getX() + difX,
+                player.getY() + difY
+        )) {
+             player.move(difX, difY);
+            view.invalidate();
+        }
         return super.onFling(e1, e2, velocityX, velocityY);
     }
 

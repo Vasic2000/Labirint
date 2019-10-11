@@ -29,6 +29,14 @@ public class Labirint implements Drawable {
         generateMaze();
     }
 
+    public Point getStart() {
+        return start;
+    }
+
+    public Point getEnd() {
+        return end;
+    }
+
     private void generateMaze() {
         for(int i = 0; i < size; i++) {
             for(int j = 0; j < size; j++) {
@@ -86,8 +94,10 @@ public class Labirint implements Drawable {
                 stack.pop();
             }
         }
+    }
 
-
+    public boolean canPlayerGoTo(int x, int y){
+        return arrayMaze[y][x];
     }
 
     private boolean isUsedCall(int x, int y) {
