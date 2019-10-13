@@ -15,6 +15,11 @@ public class Labirint implements Drawable {
 
     private Paint wallPaint;
     private boolean [][] arrayMaze;
+
+    public int getSize() {
+        return size;
+    }
+
     private final int size;
     private final Point end = new Point(1,1);
     private Point start;
@@ -53,28 +58,28 @@ public class Labirint implements Drawable {
             List<Point> unusedNeighbors = new LinkedList<>();
             //left
             if (current.x > 2) {
-                if (!isUsedCall(current.x - 2, current.y)) {
+                if (!isUsedCell(current.x - 2, current.y)) {
                     unusedNeighbors.add(new Point(current.x - 2, current.y));
                 }
             }
 
             //top
             if (current.y > 2) {
-                if (!isUsedCall(current.x, current.y - 2)) {
+                if (!isUsedCell(current.x, current.y - 2)) {
                     unusedNeighbors.add(new Point(current.x, current.y - 2));
                 }
             }
 
             //right
             if (current.x < size - 2) {
-                if (!isUsedCall(current.x + 2, current.y)) {
+                if (!isUsedCell(current.x + 2, current.y)) {
                     unusedNeighbors.add(new Point(current.x + 2, current.y));
                 }
             }
 
             //bottom
             if (current.y  < size - 2) {
-                if (!isUsedCall(current.x, current.y + 2)) {
+                if (!isUsedCell(current.x, current.y + 2)) {
                     unusedNeighbors.add(new Point(current.x, current.y + 2));
                 }
             }
@@ -100,7 +105,7 @@ public class Labirint implements Drawable {
         return arrayMaze[y][x];
     }
 
-    private boolean isUsedCall(int x, int y) {
+    private boolean isUsedCell(int x, int y) {
         if (x < 0 || y < 0 || y >= size -1 || y >= size-1) {
             return true;
         }
