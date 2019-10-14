@@ -71,7 +71,12 @@ public class Game extends GestureDetector.SimpleOnGestureListener {
         player.goTo(stepX, stepY);
 
         if(exit.getPoint().equals(player.getPoint())) {
-            create(labirint.getSize() + 2);
+            if(labirint.getSize() >27) {
+                create(labirint.getSize());
+            }
+            else {
+                create(labirint.getSize() + 2);
+            }
         }
 
         view.invalidate();
