@@ -16,11 +16,6 @@ public class Player extends Dot {
         return paint;
     }
 
-    public void move(int diffX, int diffY) {
-        point.x += diffX;
-        point.y += diffY;
-    }
-
     public void goTo(int x, int y) {
         point.x = x;
         point.y = y;
